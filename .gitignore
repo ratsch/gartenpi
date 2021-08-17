@@ -1,3 +1,4 @@
 daemon.out
 daemon.tmp
 *.pyc
+*~
