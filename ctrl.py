@@ -23,13 +23,13 @@ try:
         ADC_Value = ADC.ADS1256_GetAll()
         # print "  rint " + str((time.time()-t)*1000)+" mS in reading only channel 0\n                          "
 
-        Ipre_avg=2.5 #2213 
+        Ipre_avg=2.52213 
         Ipre=(ADC_Value[1]*5.0/0x7fffff)-Ipre_avg
         Ipre_S=Ipre+Ipre_S
         Ipre_n=Ipre_n+1 
         Iest=Ipre_S/Ipre_n*30/2.5
 
-        I2pre_avg=2.5 #2213 
+        I2pre_avg=2.52213 
         I2pre=(ADC_Value[0]*5.0/0x7fffff)-I2pre_avg
         I2pre_S=I2pre+I2pre_S
         I2pre_n=I2pre_n+1 
