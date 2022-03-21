@@ -1,5 +1,3 @@
-daemon.out
-action.log
 daemon.tmp
 *.pyc
 *~
