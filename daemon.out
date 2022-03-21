@@ -1,8 +1,8 @@
-0-ADC	2.83161	0.30971	3.71651
-1-ADC	2.59681	0.06820	0.81836
-2-ADC	2.04865	2.12413	10.62063
-mystrom-grid	{"power":0,"Ws":0,"relay":false,"temperature":22.72}
-mystrom-grid2	{"power":0,"Ws":0,"relay":false,"temperature":21.56}
-mystrom-charger	{"power":0,"Ws":0,"relay":false,"temperature":21.31}
+0-ADC	2.82968	0.30470	3.65640
+1-ADC	2.59584	0.07377	0.88522
+2-ADC	2.05618	2.13107	10.65535
+mystrom-grid	{"power":0,"Ws":0,"relay":false,"temperature":21.79}
+mystrom-grid2	{"power":0,"Ws":0,"relay":false,"temperature":20.56}
+mystrom-charger	{"power":0,"Ws":0,"relay":false,"temperature":20.37}
 ip	46.114.172.91
-date	Mon 21 Mar 2022 05:30:14 PM CET
+date	Mon 21 Mar 2022 05:32:13 PM CET
