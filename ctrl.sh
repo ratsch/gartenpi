@@ -4,9 +4,10 @@ root=~/gartenctrl/
 source $root/ctrllib.sh
 
 gridstate=`curl -s http://${mystrom_gridinverter}/report | jq -r ".relay"` 
+grid2state=`curl -s http://${mystrom_gridinverter2}/report | jq -r ".relay"` 
 chargerstate=`curl -s http://${mystrom_charger}/report | jq -r ".relay"` 
 
-state=`printf "grid=%s\tcharger=%s" "$gridstate" "$chargerstate"`
+state=`printf "grid=%s\tgrid2=%s\tcharger=%s" "$gridstate" "$grid2state" "$chargerstate"`
 actionlog "$state" 1
 
 v1=`cat $root/daemon.out | grep "2-ADC" | cut -f 4`
@@ -24,24 +25,51 @@ actionlog "$o0"
 actionlog "$o1"
 #   i1=$i1   p1=$p1
 
-if (( $(echo "$v1 > 12.2" |bc -l) )); then
+if (( $(echo "$v1 > 11.4" |bc -l) )); then
     if [ "$gridstate" == "false" ];
     then
 	actionlog "load off->on"
-	curl -s http://${mystrom_gridinverter}/relay?state=1
+	curl -s http://${mystrom_gridinverter}/relay?state=1	
+	curl -s http://${mystrom_charger}/relay?state=0
+	exit 0
     fi
-    curl -s http://${mystrom_charger}/relay?state=0
+
+    #chargerstate=`curl -s http://${mystrom_charger}/report | jq -r ".relay"` 
+    #gridstate=`curl -s http://${mystrom_gridinverter}/report | jq -r ".relay"` 
 fi
 
-    # threshold corresponds to remaining load of ≈1.5%
-    # (assuming 0.3V/2 difference under load)
-    # 20.5V/2 without load = 1.5% load remaining
+if (( $(echo "$v1 > 12.2" |bc -l) )); then
+    if [ "$grid2state" == "false" ];
+    then
+	actionlog "load2 off->on"
+	curl -s http://${mystrom_gridinverter2}/relay?state=1
+	curl -s http://${mystrom_charger}/relay?state=0
+	exit 0
+    fi
+
+    #chargerstate=`curl -s http://${mystrom_charger}/report | jq -r ".relay"` 
+    #grid2state=`curl -s http://${mystrom_gridinverter2}/report | jq -r ".relay"` 
+fi
+
+
+if [ "$grid2state" == "true" ];
+then
+    if (( $(echo "$v1 < 11.8" |bc -l) )); then 
+	actionlog "load2 on->off"
+	curl -s http://${mystrom_gridinverter2}/relay?state=0
+	exit 0
+    fi
+fi
 
 if [ "$gridstate" == "true" ];
 then
-    if (( $(echo "$v1 < 10.5" |bc -l) )); then 
+    # threshold corresponds to remaining load of ≈1.5%
+    # (assuming 0.3V/2 difference under load)
+    # 20.5V/2 without load = 1.5% load remaining
+    if (( $(echo "$v1 < 10.9" |bc -l) )); then 
 	actionlog "load on->off"
 	curl -s http://${mystrom_gridinverter}/relay?state=0
+	exit 0
     fi
 fi
 

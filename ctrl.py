@@ -35,7 +35,7 @@ try:
         I2pre_n=I2pre_n+1 
         I2est=I2pre_S/I2pre_n*30/2.5
 
-        Vpre_avg=-0.2
+        Vpre_avg=-0.08
         Vpre=(ADC_Value[2]*5.0/0x7fffff)-Vpre_avg
         Vpre_S=Vpre+Vpre_S
         Vpre_n=Vpre_n+1 

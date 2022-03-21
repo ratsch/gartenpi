@@ -1,6 +1,7 @@
 root=~/gartenctrl/
 
 mystrom_gridinverter=192.168.1.10
+mystrom_gridinverter2=192.168.8.139
 mystrom_charger=192.168.1.197
 actionlogfile=~/gartenctrl/action.log
 
